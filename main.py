@@ -3,6 +3,7 @@ import time
 import yaml
 import sys
 from pathlib import Path
+import os
 
 from .core import Slot, Metrics
 from .core.types import Frame, DetectionResult, Command
@@ -17,9 +18,12 @@ from .display import Visualizer
 
 def load_config(path: str = None) -> dict:
     if path is None:
-        # Find config relative to this module
-        module_dir = Path(__file__).parent
-        path = module_dir / "config.yaml"
+        env_config = os.getenv('ROBOTRACK_CONFIG')
+        if env_config:
+            path = env_config
+        else:
+            module_dir = Path(__file__).parent
+            path = module_dir / "config.yaml"
 
     with open(path, "r") as f:
         return yaml.safe_load(f)
