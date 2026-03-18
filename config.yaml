@@ -1,0 +1,51 @@
+camera:
+  url: "http://192.168.1.5:8080/video"
+  width: 640
+  height: 480
+  reconnect_delay: 1.0
+  read_chunk: 16384
+
+detector:
+  weights: "yolo26m.pt"
+  imgsz: 640
+  confidence: 0.01
+  target_class: 32
+  tracker: "botsort.yaml"
+  device: 0
+  half_precision: true
+  warmup_passes: 3
+
+pid:
+  kp: 0.70
+  ki: 0.05
+  kd: 0.20
+  dead_zone: 0.10
+  integral_limit: 0.40
+  derivative_alpha: 0.30
+  output_min: -1.0
+  output_max: 1.0
+
+mqtt:
+  broker: "192.168.211.50"
+  port: 1883
+  topic_cmd: "robot/cmd"
+  topic_telemetry: "robot/telemetry"
+  client_id: "tracker-pc"
+  heartbeat: 0.15
+  qos: 0
+
+control:
+  lost_timeout: 2.0
+  coast_duration: 0.5
+  command_rate_limit: 50
+
+display:
+  enabled: true
+  window_name: "RoboTrack"
+  show_metrics: true
+  show_deadzone: true
+  show_detections: true
+
+logging:
+  level: "INFO"
+  metrics_interval: 2.0
